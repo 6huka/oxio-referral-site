@@ -3,7 +3,7 @@ export default {
     const url = new URL(request.url);
 
     if (
-      url.pathname === "/api/event" &&
+      url.pathname === "/site-action" &&
       request.method === "POST"
     ) {
       try {

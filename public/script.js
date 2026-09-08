@@ -44,7 +44,7 @@ function trackEvent(name, params = {}) {
     name === "copy_referral_code" ||
     name === "referral_click"
   ) {
-    fetch("/api/event", {
+    fetch("/site-action", {
       method: "POST",
       headers: {
         "Content-Type": "application/json"
