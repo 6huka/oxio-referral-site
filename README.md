@@ -99,3 +99,19 @@ git push
 ```
 
 Cloudflare Pages will automatically redeploy the website.
+
+
+## JavaScript features included
+
+- Copy referral code button
+- "Code copied" toast
+- Referral click event tracking
+- Persistent dark/light mode
+- Dynamic copyright year
+- Collapsible FAQ sections
+- Referral-link availability check
+- Analytics hooks through `dataLayer`, `gtag` when present, and a custom `site-analytics-event`
+
+All JavaScript is in:
+
+`public/script.js`

@@ -20,6 +20,7 @@
       <a href="/how-to-use-oxio-referral-code/">How to use</a>
       <a href="/faq/">FAQ</a>
     </nav>
+    <button class="icon-button" type="button" data-theme-toggle aria-pressed="false">Dark mode</button>
   </div>
 </header>
 
@@ -35,28 +36,37 @@
   <section class="section">
     <div class="container narrow">
       <div class="card content-card">
-        <div class="faq-item">
-          <h2 style="margin-top:0">What is the Oxio referral code?</h2>
-          <p>The referral code featured on this site is <strong>RGYJA2F</strong>.</p>
+        <div class="faq-accordion">
+          <button class="faq-question" type="button" data-faq-button aria-expanded="false" aria-controls="faq-answer-1">What is the Oxio referral code?</button>
+          <div class="faq-answer" id="faq-answer-1" hidden>
+            <p>The referral code featured on this site is <strong>RGYJA2F</strong>.</p>
+          </div>
         </div>
-        <div class="faq-item">
-          <h2>What do I get?</h2>
-          <p>Under Oxio's current referral program, an eligible new customer receives one free month.</p>
+        <div class="faq-accordion">
+          <button class="faq-question" type="button" data-faq-button aria-expanded="false" aria-controls="faq-answer-2">What do I get?</button>
+          <div class="faq-answer" id="faq-answer-2" hidden>
+            <p>Under Oxio's current referral program, an eligible new customer receives one free month.</p>
+          </div>
         </div>
-        <div class="faq-item">
-          <h2>Where do I enter the code?</h2>
-          <p>Enter <strong>RGYJA2F</strong> in the referral or promo code field during Oxio checkout and apply it before completing your order.</p>
+        <div class="faq-accordion">
+          <button class="faq-question" type="button" data-faq-button aria-expanded="false" aria-controls="faq-answer-3">Where do I enter the code?</button>
+          <div class="faq-answer" id="faq-answer-3" hidden>
+            <p>Enter <strong>RGYJA2F</strong> in the referral or promo code field during Oxio checkout and apply it before completing your order.</p>
+          </div>
         </div>
-        <div class="faq-item">
-          <h2>Is this an official Oxio website?</h2>
-          <p>No. This is an independent customer website containing my personal Oxio referral code.</p>
+        <div class="faq-accordion">
+          <button class="faq-question" type="button" data-faq-button aria-expanded="false" aria-controls="faq-answer-4">Is this an official Oxio website?</button>
+          <div class="faq-answer" id="faq-answer-4" hidden>
+            <p>No. This is an independent customer website containing my personal Oxio referral code.</p>
+          </div>
         </div>
-        <div class="faq-item">
-          <h2>Do you benefit if I use the code?</h2>
-          <p>I may receive a referral credit after the referral meets Oxio's eligibility requirements.</p>
+        <div class="faq-accordion">
+          <button class="faq-question" type="button" data-faq-button aria-expanded="false" aria-controls="faq-answer-5">Do you benefit if I use the code?</button>
+          <div class="faq-answer" id="faq-answer-5" hidden>
+            <p>I may receive a referral credit after the referral meets Oxio's eligibility requirements.</p>
+          </div>
         </div>
-        
-<div class="card referral-card">
+        <div class="card referral-card">
   <p class="eyebrow">Oxio referral code</p>
   <div class="code-row">
     <div class="code">RGYJA2F</div>
@@ -64,8 +74,10 @@
   <p>Use referral code <strong>RGYJA2F</strong> when signing up for Oxio to receive one free month under Oxio's current referral program.</p>
   <div class="actions">
     <a class="button" href="https://order.oxio.ca/?referral=RGYJA2F" target="_blank" rel="sponsored nofollow noopener">Use code RGYJA2F</a>
+    <button class="icon-button" type="button" data-copy-referral>Copy code</button>
     <a class="button secondary" href="/how-to-use-oxio-referral-code/">See how to apply it</a>
   </div>
+  <p class="referral-status" data-referral-status></p>
   <p class="small" style="margin-top:16px">Referral disclosure: I may also receive a free-month credit after the referral meets Oxio's eligibility requirements.</p>
 </div>
 
@@ -78,6 +90,7 @@
   <div class="container footer-grid">
     <div>
       <strong>Internet Deal Canada</strong>
+      <p class="small">© <span data-current-year></span> Internet Deal Canada</p>
       <p class="small">Independent customer website. This site is not owned, operated, sponsored or endorsed by Oxio.</p>
       <p class="small">This site contains my personal Oxio referral code. I may receive a referral credit if you use it and the referral qualifies under Oxio's program.</p>
     </div>
@@ -88,5 +101,6 @@
   </div>
 </footer>
 
+  <script src="/script.js" defer></script>
 </body>
 </html>
