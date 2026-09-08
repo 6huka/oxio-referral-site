@@ -102,11 +102,15 @@ a {
 .nav {
   min-height: 68px;
 
-  display: flex;
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
   align-items: center;
-  justify-content: space-between;
 
   gap: 24px;
+}
+
+.nav .brand {
+  justify-self: start;
 }
 
 .brand {
@@ -116,14 +120,22 @@ a {
 }
 
 .nav nav {
+  justify-self: center;
+
   display: flex;
   gap: 20px;
   flex-wrap: wrap;
 }
 
+.nav > .icon-button {
+  justify-self: end;
+}
+
 .nav nav a {
   color: var(--muted);
+
   text-decoration: none;
+
   font-weight: 600;
   font-size: 0.95rem;
 }
@@ -133,7 +145,7 @@ a {
 }
 
 .hero {
-  padding: 86px 0 54px;
+  padding: 86px 0 0;
 }
 
 .eyebrow {
@@ -181,11 +193,11 @@ p {
 }
 
 .lead {
+  max-width: 760px;
+
   font-size: clamp(1.1rem, 2vw, 1.35rem);
 
   color: var(--muted);
-
-  max-width: 760px;
 }
 
 .card {
@@ -199,8 +211,23 @@ p {
 }
 
 .referral-card {
+  position: relative;
+
   margin-top: 34px;
+
   padding: 30px;
+}
+
+.referral-card-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+
+  gap: 16px;
+}
+
+.referral-card-header .eyebrow {
+  margin-bottom: 0;
 }
 
 .code-row {
@@ -217,20 +244,27 @@ p {
 }
 
 .code {
-  font-size: clamp(2rem, 7vw, 3.5rem);
+  margin: 12px 0 20px;
+
+  font-size: clamp(2.2rem, 7vw, 3.6rem);
 
   font-weight: 900;
 
-  letter-spacing: 0.08em;
+  letter-spacing: 0.09em;
+
+  line-height: 1;
 
   color: var(--text);
 }
 
 .button {
-  display: inline-block;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
 
   padding: 14px 20px;
 
+  border: 1px solid var(--accent);
   border-radius: 12px;
 
   background: var(--accent);
@@ -238,15 +272,15 @@ p {
 
   text-decoration: none;
 
+  font: inherit;
   font-weight: 800;
-
-  border: 1px solid var(--accent);
 
   cursor: pointer;
 
   transition:
-    opacity 0.2s ease,
-    transform 0.2s ease;
+    opacity 0.15s ease,
+    transform 0.15s ease,
+    background 0.15s ease;
 }
 
 .button:hover {
@@ -268,6 +302,88 @@ p {
 
   flex-wrap: wrap;
   align-items: center;
+
+  margin-top: 20px;
+}
+
+.icon-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  border: 1px solid var(--line);
+  border-radius: 10px;
+
+  background: var(--surface);
+  color: var(--text);
+
+  padding: 10px 14px;
+
+  cursor: pointer;
+
+  font: inherit;
+  font-weight: 700;
+
+  transition:
+    background 0.15s ease,
+    transform 0.15s ease;
+}
+
+.icon-button:hover {
+  background: var(--surface-soft);
+  transform: translateY(-1px);
+}
+
+.referral-card .actions .button,
+.referral-card .actions .icon-button {
+  flex: 1 1 0;
+
+  min-width: 0;
+  min-height: 50px;
+
+  padding: 14px 20px;
+
+  font: inherit;
+  font-size: 1rem;
+  font-weight: 800;
+  line-height: 1.2;
+
+  border-radius: 12px;
+
+  text-align: center;
+}
+
+.copy-icon-button {
+  width: 42px;
+  height: 42px;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  flex-shrink: 0;
+
+  padding: 0;
+
+  border: 1px solid var(--line);
+  border-radius: 10px;
+
+  background: var(--surface-soft);
+  color: var(--text);
+
+  cursor: pointer;
+
+  transition:
+    background 0.15s ease,
+    transform 0.15s ease,
+    border-color 0.15s ease;
+}
+
+.copy-icon-button:hover {
+  background: var(--accent-soft);
+  border-color: var(--text);
+
+  transform: translateY(-1px);
 }
 
 .section {
@@ -276,6 +392,7 @@ p {
 
 .content-card {
   padding: 30px;
+
   margin-bottom: 22px;
 }
 
@@ -297,16 +414,6 @@ p {
   margin-bottom: 10px;
 }
 
-.faq-item {
-  padding: 20px 0;
-
-  border-top: 1px solid var(--line);
-}
-
-.faq-item:first-child {
-  border-top: 0;
-}
-
 .callout {
   padding: 20px;
 
@@ -322,7 +429,214 @@ p {
 .callout a {
   color: var(--text);
   text-decoration: underline;
+
+  overflow-wrap: anywhere;
 }
+
+/* -----------------------------------------
+   Thank-you section
+----------------------------------------- */
+
+.thank-you-section {
+  padding-top: 0;
+  padding-bottom: 30px;
+}
+
+.thank-you-card {
+  padding: 32px;
+
+  background: var(--accent);
+  color: var(--accent-text);
+
+  border-radius: var(--radius);
+
+  box-shadow: var(--shadow);
+}
+
+.thank-you-card .eyebrow {
+  color: inherit;
+  opacity: 0.72;
+}
+
+.thank-you-card h2 {
+  margin: 0 0 14px;
+
+  color: inherit;
+}
+
+.thank-you-card p {
+  max-width: 680px;
+}
+
+.thank-you-card p:last-child {
+  margin-bottom: 0;
+}
+
+/* -----------------------------------------
+   How-to options
+----------------------------------------- */
+
+.referral-options {
+  display: grid;
+
+  grid-template-columns:
+    repeat(2, minmax(0, 1fr));
+
+  gap: 16px;
+
+  margin-bottom: 12px;
+}
+
+.referral-option {
+  padding: 26px 26px 20px;
+
+  background: var(--surface);
+  color: var(--text);
+
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+
+  box-shadow: var(--shadow);
+}
+
+.referral-option-number {
+  width: 36px;
+  height: 36px;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  margin-bottom: 16px;
+
+  border-radius: 50%;
+
+  background: var(--accent);
+  color: var(--accent-text);
+
+  font-weight: 900;
+}
+
+.referral-option h2,
+.referral-option h3 {
+  margin-top: 0;
+}
+
+.referral-option .steps {
+  margin-bottom: 14px;
+}
+
+.referral-option .button,
+.referral-option .icon-button {
+  margin-bottom: 0;
+}
+
+/* -----------------------------------------
+   FAQ
+----------------------------------------- */
+
+.faq-item {
+  padding: 20px 0;
+
+  border-top: 1px solid var(--line);
+}
+
+.faq-item:first-child {
+  border-top: 0;
+}
+
+.faq-accordion {
+  border-top: 1px solid var(--line);
+}
+
+.faq-accordion:first-child {
+  border-top: 0;
+}
+
+.faq-question {
+  width: 100%;
+
+  padding: 18px 0;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  gap: 18px;
+
+  border: 0;
+
+  background: transparent;
+  color: var(--text);
+
+  text-align: left;
+
+  font: inherit;
+  font-weight: 800;
+
+  cursor: pointer;
+}
+
+.faq-question::after {
+  content: "+";
+
+  font-size: 1.4rem;
+
+  line-height: 1;
+}
+
+.faq-question[aria-expanded="true"]::after {
+  content: "−";
+}
+
+.faq-answer {
+  padding-bottom: 18px;
+
+  color: var(--muted);
+}
+
+/* -----------------------------------------
+   Toast
+----------------------------------------- */
+
+.toast {
+  position: fixed;
+
+  left: 50%;
+  bottom: 24px;
+
+  transform: translate(-50%, 20px);
+
+  opacity: 0;
+
+  pointer-events: none;
+
+  padding: 12px 16px;
+
+  background: var(--text);
+  color: var(--bg);
+
+  border: 1px solid var(--line);
+  border-radius: 999px;
+
+  font-weight: 800;
+
+  z-index: 100;
+
+  transition:
+    opacity 0.2s ease,
+    transform 0.2s ease;
+}
+
+.toast.show {
+  opacity: 1;
+
+  transform: translate(-50%, 0);
+}
+
+/* -----------------------------------------
+   Footer
+----------------------------------------- */
 
 footer {
   margin-top: 40px;
@@ -353,137 +667,23 @@ footer a:hover {
   color: var(--text);
 }
 
-.icon-button {
-  border: 1px solid var(--line);
-
-  background: var(--surface);
-  color: var(--text);
-
-  border-radius: 10px;
-
-  padding: 10px 14px;
-
-  cursor: pointer;
-
-  font: inherit;
-  font-weight: 700;
-
-  transition:
-    background 0.2s ease,
-    transform 0.2s ease;
-}
-
-.icon-button:hover {
-  background: var(--surface-soft);
-  transform: translateY(-1px);
-}
-
-.toast {
-  position: fixed;
-
-  left: 50%;
-  bottom: 24px;
-
-  transform: translate(-50%, 20px);
-
-  opacity: 0;
-
-  pointer-events: none;
-
-  background: var(--text);
-  color: var(--bg);
-
-  padding: 12px 16px;
-
-  border: 1px solid var(--line);
-
-  border-radius: 999px;
-
-  font-weight: 800;
-
-  z-index: 100;
-
-  transition:
-    opacity 0.2s ease,
-    transform 0.2s ease;
-}
-
-.toast.show {
-  opacity: 1;
-
-  transform: translate(-50%, 0);
-}
-
-.referral-status {
-  margin-top: 10px;
-
-  font-size: 0.84rem;
-
-  color: var(--muted);
-}
-
-.referral-status[data-status="ok"] {
-  font-weight: 700;
-}
-
-.faq-accordion {
-  border-top: 1px solid var(--line);
-}
-
-.faq-accordion:first-child {
-  border-top: 0;
-}
-
-.faq-question {
-  width: 100%;
-
-  padding: 18px 0;
-
-  border: 0;
-
-  background: transparent;
-  color: var(--text);
-
-  display: flex;
-
-  align-items: center;
-  justify-content: space-between;
-
-  gap: 18px;
-
-  text-align: left;
-
-  font: inherit;
-  font-weight: 800;
-
-  cursor: pointer;
-}
-
-.faq-question::after {
-  content: "+";
-
-  font-size: 1.4rem;
-
-  line-height: 1;
-}
-
-.faq-question[aria-expanded="true"]::after {
-  content: "−";
-}
-
-.faq-answer {
-  padding-bottom: 18px;
-
-  color: var(--muted);
-}
+/* -----------------------------------------
+   Mobile
+----------------------------------------- */
 
 @media (max-width: 700px) {
   .nav {
+    grid-template-columns: 1fr;
+
     align-items: flex-start;
 
-    flex-direction: column;
-
     padding: 18px 0;
+  }
+
+  .nav .brand,
+  .nav nav,
+  .nav > .icon-button {
+    justify-self: start;
   }
 
   .hero {
@@ -491,8 +691,28 @@ footer a:hover {
   }
 
   .content-card,
-  .referral-card {
+  .referral-card,
+  .thank-you-card,
+  .referral-option {
     padding: 22px;
+  }
+
+  .actions {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .actions .button,
+  .actions .icon-button {
+    width: 100%;
+  }
+
+  .referral-options {
+    grid-template-columns: 1fr;
+
+    gap: 14px;
+
+    margin-bottom: 10px;
   }
 
   .footer-grid {

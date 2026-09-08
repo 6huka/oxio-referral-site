@@ -1,7 +1,6 @@
 const REFERRAL_CODE = "RGYJA2F";
 const REFERRAL_URL = "https://order.oxio.ca/?referral=RGYJA2F";
 
-
 /*
 |--------------------------------------------------------------------------
 | Analytics
@@ -20,12 +19,12 @@ function trackEvent(name, params = {}) {
   window.dataLayer = window.dataLayer || [];
   window.dataLayer.push(payload);
 
-  // Google Analytics 4, if gtag is installed later
+  // Google Analytics 4, if gtag is added later
   if (typeof window.gtag === "function") {
     window.gtag("event", name, params);
   }
 
-  // Custom event for any future analytics system
+  // Custom event for another analytics system later
   window.dispatchEvent(
     new CustomEvent("site-analytics-event", {
       detail: payload
@@ -34,7 +33,6 @@ function trackEvent(name, params = {}) {
 
   console.debug("[analytics]", payload);
 }
-
 
 /*
 |--------------------------------------------------------------------------
@@ -58,7 +56,6 @@ function showToast(message) {
   }
 
   toast.textContent = message;
-
   toast.classList.add("show");
 
   clearTimeout(window.__toastTimer);
@@ -67,7 +64,6 @@ function showToast(message) {
     toast.classList.remove("show");
   }, 1800);
 }
-
 
 /*
 |--------------------------------------------------------------------------
@@ -89,7 +85,6 @@ async function copyReferralCode() {
     document.body.appendChild(temp);
 
     temp.select();
-
     document.execCommand("copy");
 
     temp.remove();
@@ -102,20 +97,16 @@ async function copyReferralCode() {
   });
 }
 
-
 function initCopyButtons() {
   document
     .querySelectorAll("[data-copy-referral]")
     .forEach((button) => {
-
       button.addEventListener(
         "click",
         copyReferralCode
       );
-
     });
 }
-
 
 /*
 |--------------------------------------------------------------------------
@@ -127,20 +118,15 @@ function initReferralTracking() {
   document
     .querySelectorAll('a[href*="order.oxio.ca"]')
     .forEach((link) => {
-
       link.addEventListener("click", () => {
-
         trackEvent("referral_click", {
           code: REFERRAL_CODE,
           destination: REFERRAL_URL,
           label: link.textContent.trim()
         });
-
       });
-
     });
 }
-
 
 /*
 |--------------------------------------------------------------------------
@@ -172,7 +158,6 @@ function applyTheme(theme) {
   );
 }
 
-
 function initTheme() {
   const savedTheme =
     localStorage.getItem("site-theme");
@@ -188,7 +173,6 @@ function initTheme() {
 
   applyTheme(initialTheme);
 
-
   const button =
     document.querySelector("[data-theme-toggle]");
 
@@ -196,9 +180,7 @@ function initTheme() {
     return;
   }
 
-
   button.addEventListener("click", () => {
-
     const currentTheme =
       document.documentElement.dataset.theme;
 
@@ -207,7 +189,6 @@ function initTheme() {
         ? "light"
         : "dark";
 
-
     localStorage.setItem(
       "site-theme",
       nextTheme
@@ -215,28 +196,15 @@ function initTheme() {
 
     applyTheme(nextTheme);
 
-
     trackEvent("theme_change", {
       theme: nextTheme
     });
-
   });
 }
 
-
 /*
 |--------------------------------------------------------------------------
-| Dynamic date
-|--------------------------------------------------------------------------
-|
-| Automatically updates:
-|
-| Updated September 2026
-| Oxio Referral Code Canada 2026
-| Browser tab title
-| Open Graph title
-| Footer year
-|
+| Dynamic month and year
 |--------------------------------------------------------------------------
 */
 
@@ -245,7 +213,6 @@ function initDynamicDates() {
 
   const year =
     now.getFullYear();
-
 
   const monthYear =
     now.toLocaleDateString(
@@ -256,53 +223,25 @@ function initDynamicDates() {
       }
     );
 
-
-  /*
-  |----------------------------------------------------------------------
-  | Update year anywhere on the page
-  |----------------------------------------------------------------------
-  */
-
+  // Update all visible years
   document
     .querySelectorAll("[data-current-year]")
     .forEach((element) => {
-
       element.textContent = year;
-
     });
 
-
-  /*
-  |----------------------------------------------------------------------
-  | Update month + year
-  |----------------------------------------------------------------------
-  */
-
+  // Update all visible month + year labels
   document
     .querySelectorAll("[data-current-month-year]")
     .forEach((element) => {
-
       element.textContent = monthYear;
-
     });
 
-
-  /*
-  |----------------------------------------------------------------------
-  | Update browser title
-  |----------------------------------------------------------------------
-  */
-
+  // Update browser tab title
   document.title =
     `Oxio Referral Code Canada ${year}: ${REFERRAL_CODE} | Get 1 Month Free`;
 
-
-  /*
-  |----------------------------------------------------------------------
-  | Update Open Graph title
-  |----------------------------------------------------------------------
-  */
-
+  // Update Open Graph title if present
   const ogTitle =
     document.querySelector(
       "[data-dynamic-og-title]"
@@ -316,7 +255,6 @@ function initDynamicDates() {
   }
 }
 
-
 /*
 |--------------------------------------------------------------------------
 | Collapsible FAQ
@@ -327,149 +265,49 @@ function initFaqAccordions() {
   document
     .querySelectorAll("[data-faq-button]")
     .forEach((button) => {
-
       const targetId =
         button.getAttribute(
           "aria-controls"
         );
-
 
       const target =
         document.getElementById(
           targetId
         );
 
-
       if (!target) {
         return;
       }
 
-
       button.addEventListener(
         "click",
         () => {
-
           const expanded =
             button.getAttribute(
               "aria-expanded"
             ) === "true";
 
-
           const nextExpanded =
             !expanded;
-
 
           button.setAttribute(
             "aria-expanded",
             String(nextExpanded)
           );
 
-
           target.hidden =
             !nextExpanded;
-
 
           trackEvent("faq_toggle", {
             question:
               button.textContent.trim(),
-
             expanded:
               nextExpanded
           });
-
         }
       );
-
     });
 }
-
-
-/*
-|--------------------------------------------------------------------------
-| Referral link status check
-|--------------------------------------------------------------------------
-*/
-
-async function checkReferralLink() {
-  const statusElements =
-    document.querySelectorAll(
-      "[data-referral-status]"
-    );
-
-
-  if (!statusElements.length) {
-    return;
-  }
-
-
-  statusElements.forEach(
-    (element) => {
-
-      element.textContent =
-        "Checking referral link…";
-
-    }
-  );
-
-
-  try {
-
-    await fetch(
-      REFERRAL_URL,
-      {
-        method: "HEAD",
-        mode: "no-cors",
-        cache: "no-store"
-      }
-    );
-
-
-    statusElements.forEach(
-      (element) => {
-
-        element.textContent =
-          "Referral link available";
-
-        element.dataset.status =
-          "ok";
-
-      }
-    );
-
-
-    trackEvent(
-      "referral_link_check",
-      {
-        result:
-          "reachable_or_opaque"
-      }
-    );
-
-  } catch {
-
-    statusElements.forEach(
-      (element) => {
-
-        element.textContent =
-          "Referral link status could not be verified";
-
-        element.dataset.status =
-          "unknown";
-
-      }
-    );
-
-
-    trackEvent(
-      "referral_link_check",
-      {
-        result: "unknown"
-      }
-    );
-
-  }
-}
-
 
 /*
 |--------------------------------------------------------------------------
@@ -480,18 +318,10 @@ async function checkReferralLink() {
 document.addEventListener(
   "DOMContentLoaded",
   () => {
-
     initCopyButtons();
-
     initReferralTracking();
-
     initTheme();
-
     initDynamicDates();
-
     initFaqAccordions();
-
-    checkReferralLink();
-
   }
 );
