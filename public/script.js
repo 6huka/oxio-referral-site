@@ -214,14 +214,8 @@ function initTheme() {
   const savedTheme =
     localStorage.getItem("site-theme");
 
-  const systemDark =
-    window.matchMedia(
-      "(prefers-color-scheme: dark)"
-    ).matches;
-
   const initialTheme =
-    savedTheme ||
-    (systemDark ? "dark" : "light");
+    savedTheme || "light";
 
   applyTheme(initialTheme);
 
