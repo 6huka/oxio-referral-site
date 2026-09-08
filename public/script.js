@@ -286,21 +286,6 @@ function initDynamicDates() {
     .forEach((element) => {
       element.textContent = monthYear;
     });
-
-  document.title =
-    `Oxio Referral Code Canada ${year}: ${REFERRAL_CODE} | Get 1 Month Free`;
-
-  const ogTitle =
-    document.querySelector(
-      "[data-dynamic-og-title]"
-    );
-
-  if (ogTitle) {
-    ogTitle.setAttribute(
-      "content",
-      `Oxio Referral Code Canada ${year}: ${REFERRAL_CODE}`
-    );
-  }
 }
 
 /*
