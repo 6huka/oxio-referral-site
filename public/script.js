@@ -3,6 +3,23 @@ const REFERRAL_URL = "https://order.oxio.ca/?referral=RGYJA2F";
 
 /*
 |--------------------------------------------------------------------------
+| Session ID
+|--------------------------------------------------------------------------
+*/
+
+function getSessionId() {
+  let sessionId = sessionStorage.getItem("site-session-id");
+
+  if (!sessionId) {
+    sessionId = crypto.randomUUID();
+    sessionStorage.setItem("site-session-id", sessionId);
+  }
+
+  return sessionId;
+}
+
+/*
+|--------------------------------------------------------------------------
 | Analytics
 |--------------------------------------------------------------------------
 */
@@ -10,21 +27,46 @@ const REFERRAL_URL = "https://order.oxio.ca/?referral=RGYJA2F";
 function trackEvent(name, params = {}) {
   const payload = {
     event: name,
-    timestamp: new Date().toISOString(),
     path: window.location.pathname,
+    sessionId: getSessionId(),
+    viewportWidth: window.innerWidth,
+    timeOnPage: Math.round(performance.now()),
     ...params
   };
 
-  // Google Tag Manager-compatible dataLayer
+  /*
+  |------------------------------------------------------------------------
+  | Send only referral conversions to Cloudflare
+  |------------------------------------------------------------------------
+  */
+
+  if (
+    name === "copy_referral_code" ||
+    name === "referral_click"
+  ) {
+    fetch("/api/event", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify(payload),
+      keepalive: true
+    }).catch(() => {});
+  }
+
+  /*
+  |------------------------------------------------------------------------
+  | Keep existing analytics compatibility
+  |------------------------------------------------------------------------
+  */
+
   window.dataLayer = window.dataLayer || [];
   window.dataLayer.push(payload);
 
-  // Google Analytics 4, if gtag is added later
   if (typeof window.gtag === "function") {
     window.gtag("event", name, params);
   }
 
-  // Custom event for another analytics system later
   window.dispatchEvent(
     new CustomEvent("site-analytics-event", {
       detail: payload
@@ -71,11 +113,10 @@ function showToast(message) {
 |--------------------------------------------------------------------------
 */
 
-async function copyReferralCode() {
+async function copyReferralCode(event) {
   try {
     await navigator.clipboard.writeText(REFERRAL_CODE);
   } catch {
-    // Fallback for browsers where Clipboard API is unavailable
     const temp = document.createElement("textarea");
 
     temp.value = REFERRAL_CODE;
@@ -92,8 +133,16 @@ async function copyReferralCode() {
 
   showToast("Code copied");
 
+  const button = event.currentTarget;
+
+  const label =
+    button.dataset.trackLabel ||
+    button.getAttribute("aria-label") ||
+    button.textContent.trim() ||
+    "unknown-copy-button";
+
   trackEvent("copy_referral_code", {
-    code: REFERRAL_CODE
+    label
   });
 }
 
@@ -119,10 +168,13 @@ function initReferralTracking() {
     .querySelectorAll('a[href*="order.oxio.ca"]')
     .forEach((link) => {
       link.addEventListener("click", () => {
+        const label =
+          link.dataset.trackLabel ||
+          link.textContent.trim() ||
+          "unknown-referral-link";
+
         trackEvent("referral_click", {
-          code: REFERRAL_CODE,
-          destination: REFERRAL_URL,
-          label: link.textContent.trim()
+          label
         });
       });
     });
@@ -223,25 +275,21 @@ function initDynamicDates() {
       }
     );
 
-  // Update all visible years
   document
     .querySelectorAll("[data-current-year]")
     .forEach((element) => {
       element.textContent = year;
     });
 
-  // Update all visible month + year labels
   document
     .querySelectorAll("[data-current-month-year]")
     .forEach((element) => {
       element.textContent = monthYear;
     });
 
-  // Update browser tab title
   document.title =
     `Oxio Referral Code Canada ${year}: ${REFERRAL_CODE} | Get 1 Month Free`;
 
-  // Update Open Graph title if present
   const ogTitle =
     document.querySelector(
       "[data-dynamic-og-title]"
