@@ -80,9 +80,9 @@ sitemap.xml
 
 Then use URL Inspection and request indexing for:
 
-- https://YOURDOMAIN.ca/
-- https://YOURDOMAIN.ca/how-to-use-oxio-referral-code/
-- https://YOURDOMAIN.ca/faq/
+- https://oxiofreeinternet.com/
+- https://oxiofreeinternet.com/how-to-use-oxio-referral-code/
+- https://oxiofreeinternet.com/faq/
 
 ## 6. Bing Webmaster Tools
 

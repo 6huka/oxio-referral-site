@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://YOURDOMAIN.ca/sitemap.xml
+Sitemap: https://oxiofreeinternet.com/sitemap.xml
